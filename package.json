@@ -7,9 +7,16 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "prettier": "prettier --write src/**/*.{js,ts,scss}",
+    "lint-scss": "stylelint src/**/*.scss"
   },
   "private": true,
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
   "dependencies": {
     "@angular/animations": "~9.1.9",
     "@angular/cdk": "^9.2.4",
@@ -33,6 +40,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
     "codelyzer": "^5.1.2",
+    "husky": "^4.2.5",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~5.0.0",
@@ -42,8 +50,14 @@
     "karma-jasmine-html-reporter": "^1.4.2",
     "prettier": "^2.0.5",
     "protractor": "~7.0.0",
+    "stylelint": "^13.6.0",
+    "stylelint-config-airbnb": "0.0.0",
+    "stylelint-config-prettier": "^8.0.1",
+    "stylelint-prettier": "^1.1.2",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-plugin-prettier": "^2.3.0",
     "typescript": "~3.8.3"
   }
 }
