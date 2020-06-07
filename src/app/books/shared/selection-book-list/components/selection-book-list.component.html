@@ -1,0 +1,24 @@
+<div class="selection-book-list">
+  <ng-container *ngIf="!IsEmptyList; else errorMessage">
+    <mat-list role="list">
+      <mat-list-item role="listitem" *ngFor="let item of Items" class="book">
+        <img *ngIf="item?.thumbnail" matListAvatar [src]="item?.thumbnail" alt="book thumbnail" />
+        <div matLine class="book__title">{{ item.title }}</div>
+        <div matLine class="book__description" *ngIf="item?.description">
+          {{ item.description }}
+        </div>
+        <div class="book__control">
+          <button mat-icon-button>
+            <mat-icon color="primary">star</mat-icon>
+          </button>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </ng-container>
+</div>
+
+<ng-template #errorMessage>
+  <div class="selection-book-list__error-message">
+    Список пустой
+  </div>
+</ng-template>
