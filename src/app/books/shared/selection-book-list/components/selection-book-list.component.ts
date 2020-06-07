@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { SelectionBook } from '../types/selection-book-list.type';
 
@@ -8,23 +8,32 @@ import { SelectionBook } from '../types/selection-book-list.type';
 @Component({
   selector: 'bkmrk-selection-book-list',
   templateUrl: './selection-book-list.component.html',
-  styleUrls: ['./selection-book-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectionBookListComponent {
   private items: SelectionBook[] = [];
 
+  @Output()
+  Select: EventEmitter<SelectionBook> = new EventEmitter();
+
   @Input()
-  set Items(v: SelectionBook[]) {
+  set Books(v: SelectionBook[]) {
     this.items = v;
   }
 
-  get Items(): SelectionBook[] {
+  get Books(): SelectionBook[] {
     return this.items;
   }
 
   get IsEmptyList(): boolean {
     return this.isEmptyList();
+  }
+
+  /**
+   * Выбрать книгу
+   */
+  public selectBook(book: SelectionBook): void {
+    this.Select.emit(book);
   }
 
   /**

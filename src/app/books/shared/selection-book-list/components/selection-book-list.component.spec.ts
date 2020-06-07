@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ChangeDetectionStrategy, Component, DebugElement } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, Input } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { SelectionBookListComponent } from './selection-book-list.component';
 import { SelectionBook } from '../types/selection-book-list.type';
 
-fdescribe('SelectionBookListComponent', () => {
+describe('SelectionBookListComponent', () => {
   let component: SelectionBookListComponent;
   let fixture: ComponentFixture<SelectionBookListComponent>;
   const selectionListCss = 'selection-book-list';
@@ -37,7 +37,7 @@ fdescribe('SelectionBookListComponent', () => {
 
   describe('Значения по умолчанию', () => {
     it('По умолчанию список должен быть пуст', () => {
-      expect(component.Items).toEqual([]);
+      expect(component.Books).toEqual([]);
     });
 
     it('По умолчанию должно быть выведено сообщение об ошибке', () => {
@@ -48,7 +48,7 @@ fdescribe('SelectionBookListComponent', () => {
 
   describe('Отображение с переданным набором элементов', () => {
     beforeEach(() => {
-      component.Items = itemsMock;
+      component.Books = itemsMock;
       fixture.detectChanges();
     });
 
@@ -64,7 +64,7 @@ fdescribe('SelectionBookListComponent', () => {
 
   describe('Отображение с пустым списком элементов', () => {
     beforeEach(() => {
-      component.Items = [];
+      component.Books = [];
       fixture.detectChanges();
     });
 
@@ -80,16 +80,27 @@ fdescribe('SelectionBookListComponent', () => {
 
   describe('Обработка элемента списка', () => {
     beforeEach(() => {
-      component.Items = itemsMock;
+      component.Books = itemsMock;
       fixture.detectChanges();
     });
 
-    it('Значение #selected должно быть изменено на противоположное при вызове метода #selectBook', () => {
+    // it('Значение #selected должно быть изменено на противоположное при вызове метода #selectBook', () => {
+    //   const expectedBook: SelectionBook = Object.assign({}, selectedBookMock);
+    //
+    //   component.selectBook(expectedBook);
+    //   expect(expectedBook.selected).toBeFalsy();
+    //
+    //   component.selectBook(expectedBook);
+    //   expect(expectedBook.selected).toBeTruthy();
+    // });
+
+    it('Метод #selectBook должен поднимать событие с выбранной книгой', () => {
       const expectedBook: SelectionBook = Object.assign({}, selectedBookMock);
+      const outputEvent: jasmine.Spy = spyOn(component.Select, 'emit');
 
       component.selectBook(expectedBook);
 
-      expect(expectedBook.selected).toBeFalsy();
+      expect(outputEvent).toHaveBeenCalled();
     });
   });
 });
@@ -142,4 +153,7 @@ class MatListItemMock {}
   selector: 'mat-icon',
   template: '<ng-content></ng-content>',
 })
-class MatIconMock {}
+class MatIconMock {
+    @Input()
+    color: any;
+}
