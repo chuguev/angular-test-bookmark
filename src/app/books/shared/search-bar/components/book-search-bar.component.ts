@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -7,24 +7,31 @@ import { Subject } from 'rxjs';
   selector: 'bkmrk-books-search-bar',
   templateUrl: './book-search-bar.component.html',
   styleUrls: ['./book-search-bar.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookSearchBarComponent implements OnInit, OnDestroy {
+  private unsubscribe$: Subject<boolean> = new Subject<boolean>();
+  private form: FormGroup;
+
   @Output()
   public Search: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private fb: FormBuilder) {}
 
-  private unsubscribe$: Subject<boolean> = new Subject<boolean>();
-  private form: FormGroup;
-
   get Form(): FormGroup {
     return this.form;
   }
 
+  /**
+   * Инициализация формы
+   */
   public ngOnInit(): void {
     this.initForm();
   }
 
+  /**
+   * Отписка
+   */
   public ngOnDestroy(): void {
     this.unsubscribe$.next(true);
   }

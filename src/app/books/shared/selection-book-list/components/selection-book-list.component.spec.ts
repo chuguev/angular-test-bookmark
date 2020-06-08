@@ -84,16 +84,6 @@ describe('SelectionBookListComponent', () => {
       fixture.detectChanges();
     });
 
-    // it('Значение #selected должно быть изменено на противоположное при вызове метода #selectBook', () => {
-    //   const expectedBook: SelectionBook = Object.assign({}, selectedBookMock);
-    //
-    //   component.selectBook(expectedBook);
-    //   expect(expectedBook.selected).toBeFalsy();
-    //
-    //   component.selectBook(expectedBook);
-    //   expect(expectedBook.selected).toBeTruthy();
-    // });
-
     it('Метод #selectBook должен поднимать событие с выбранной книгой', () => {
       const expectedBook: SelectionBook = Object.assign({}, selectedBookMock);
       const outputEvent: jasmine.Spy = spyOn(component.Select, 'emit');
@@ -154,6 +144,6 @@ class MatListItemMock {}
   template: '<ng-content></ng-content>',
 })
 class MatIconMock {
-    @Input()
-    color: any;
+  @Input()
+  color: any;
 }

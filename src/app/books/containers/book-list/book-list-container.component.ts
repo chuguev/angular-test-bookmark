@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 /**
  * Контейнер списка книг
@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'bkmrk-book-list-container',
   templateUrl: './book-list.container.html',
   styleUrls: ['./book-list.container.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookListContainer implements OnInit {
   constructor() {}

@@ -1,11 +1,14 @@
 import { TestBed, async } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
+import { Component } from '@angular/core';
 
-xdescribe('AppComponent', () => {
+describe('AppComponent', () => {
   beforeEach(async(() => {
+    const mockComponents: any[] = [BookListContainerMock];
+
     TestBed.configureTestingModule({
-      declarations: [AppComponent],
+      declarations: [AppComponent, ...mockComponents],
     }).compileComponents();
   }));
 
@@ -15,3 +18,10 @@ xdescribe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 });
+
+// tslint:disable
+@Component({
+  selector: 'bkmrk-book-list-container',
+  template: '',
+})
+class BookListContainerMock {}
