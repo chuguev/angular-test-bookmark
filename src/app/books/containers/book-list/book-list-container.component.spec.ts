@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BookListContainer } from './book-list-container.component';
+import { BookListContainerComponent } from './book-list-container.component';
 import { Component } from '@angular/core';
 
 describe('BookListComponent', () => {
-  let component: BookListContainer;
-  let fixture: ComponentFixture<BookListContainer>;
+  let component: BookListContainerComponent;
+  let fixture: ComponentFixture<BookListContainerComponent>;
 
   beforeEach(async(() => {
     const mockComponents: any[] = [MatTabGroupMock, MatTabMock, AllBooksMock, FavoriteBooksMock];
 
     TestBed.configureTestingModule({
-      declarations: [BookListContainer, ...mockComponents],
+      declarations: [BookListContainerComponent, ...mockComponents],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BookListContainer);
+    fixture = TestBed.createComponent(BookListContainerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
 /**
  * Список всех книг
@@ -10,13 +10,18 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AllBooksComponent implements OnInit {
-  public books: any[] = [
-    {
-      id: 'id',
-      title: 'title',
-      selected: true,
-    },
-  ];
+  private books: any[] = [];
+
+  @Input()
+  set Books(v: any[]) {
+    console.log(v);
+    this.books = v;
+  }
+
+  get Books(): any[] {
+    return this.books;
+  }
+
   ngOnInit(): void {}
 
   public selectBook(book: any): void {

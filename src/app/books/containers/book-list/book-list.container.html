@@ -1,7 +1,10 @@
 <div class="books">
   <mat-tab-group>
     <mat-tab label="Список книг">
-        <bkmrk-all-books></bkmrk-all-books>
+        <bkmrk-all-books [Books]="Books$ | async"></bkmrk-all-books>
+        <div class="books__upload-more" *ngIf="true">
+            <button (click)="uploadMore()" mat-raised-button color="primary">More!!!</button>
+        </div>
     </mat-tab>
     <mat-tab label="Любимые книги">
         <bkmrk-favorite-books></bkmrk-favorite-books>
