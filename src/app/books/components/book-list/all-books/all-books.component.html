@@ -1,3 +1,9 @@
 <bkmrk-books-search-bar (Search)="search($event)"></bkmrk-books-search-bar>
-<bkmrk-selection-book-list [Books]="Books" (Select)="selectBook($event)"></bkmrk-selection-book-list>
+<bkmrk-selection-book-list [Books]="SelectionBooks" (Select)="switchFavorite($event)"></bkmrk-selection-book-list>
+<div class="status">
+    <ng-content></ng-content>
+</div>
+<div class="upload-more" *ngIf="!IsAllBooksUpload">
+    <button (click)="UploadMore.emit()" mat-raised-button color="primary">Загрузить еще ...</button>
+</div>
 

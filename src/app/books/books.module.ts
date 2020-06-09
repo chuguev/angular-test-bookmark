@@ -9,10 +9,11 @@ import { FavoriteBooksComponent } from './components/book-list/favorite-books/fa
 import { AllBooksComponent } from './components/book-list/all-books/all-books.component';
 import { BooksSharedModule } from './shared/books-shared.module';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [BookListContainerComponent, FavoriteBooksComponent, AllBooksComponent],
-  imports: [CommonModule, BooksSharedModule, MatTabsModule, MatButtonModule],
+  imports: [CommonModule, BooksSharedModule, MatTabsModule, MatButtonModule, MatProgressSpinnerModule],
   exports: [BookListContainerComponent],
 })
 export class BooksModule {}

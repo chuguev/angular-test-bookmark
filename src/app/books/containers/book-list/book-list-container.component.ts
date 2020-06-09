@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 import { BooksService } from '../../services/books.service';
 import { Observable } from 'rxjs';
+import { Book } from '../../services/books.type';
 
 /**
  * Контейнер списка книг
@@ -9,11 +10,13 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'bkmrk-book-list-container',
   templateUrl: './book-list.container.html',
-  styleUrls: ['./book-list.container.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookListContainerComponent implements OnInit {
-  private books$: Observable<any[]>;
+  private books$: Observable<Book[]>;
+  private isLoadingBooks$: Observable<boolean>;
+  private isErrorBooks$: Observable<boolean>;
+  private isAllBooksUpload: boolean;
 
   constructor(private booksService: BooksService) {}
 
@@ -21,13 +24,55 @@ export class BookListContainerComponent implements OnInit {
     return this.books$;
   }
 
-  ngOnInit(): void {
-    this.books$ = this.booksService.getBooks();
-
-    this.books$.subscribe(d => console.log(d));
+  get IsAllBooksUpload(): boolean {
+    return this.isAllBooksUpload;
   }
 
-  public uploadMore(): void {
+  get IsLoadingBooks$(): Observable<boolean> {
+    return this.isLoadingBooks$;
+  }
+
+  get IsErrorBooks$(): Observable<boolean> {
+    return this.isErrorBooks$;
+  }
+
+  /**
+   * Инициализация параметров страницы
+   */
+  public ngOnInit(): void {
+    this.initialPageParameters();
+  }
+
+  /**
+   * Загрузить дополнительный список книг
+   */
+  public uploadMoreBooks(): void {
     this.booksService.uploadMoreBooks();
+  }
+
+  /**
+   * Поиск по списку книг
+   * @param searchTerm - поисковой запрос
+   */
+  public search(searchTerm: string): void {
+    console.log(searchTerm);
+  }
+
+  /**
+   * Обновить статус любимой книги
+   * @param book - книга для обновления
+   */
+  public updateFavoriteBook(book: Book): void {
+    console.log(book);
+  }
+
+  /**
+   * Инициализация параметров страницы
+   */
+  private initialPageParameters(): void {
+    this.books$ = this.booksService.getBooks();
+    this.isLoadingBooks$ = this.booksService.isLoading();
+    this.isErrorBooks$ = this.booksService.isError();
+    this.isAllBooksUpload = this.booksService.isAllBooks();
   }
 }

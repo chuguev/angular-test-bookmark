@@ -1,10 +1,15 @@
 <div class="books">
   <mat-tab-group>
     <mat-tab label="Список книг">
-        <bkmrk-all-books [Books]="Books$ | async"></bkmrk-all-books>
-        <div class="books__upload-more" *ngIf="true">
-            <button (click)="uploadMore()" mat-raised-button color="primary">More!!!</button>
-        </div>
+        <bkmrk-all-books [Books]="Books$ | async" [IsAllBooksUpload]="IsAllBooksUpload" (Search)="search($event)"
+                         (UploadMore)="uploadMoreBooks()" (SwitchFavorite)="updateFavoriteBook($event)">
+            <ng-container *ngIf="IsLoadingBooks$ | async">
+                <mat-spinner></mat-spinner>
+            </ng-container>
+            <ng-container *ngIf="IsErrorBooks$ | async">
+                <div class="mat-display-1">Ошибка загрузки списка</div>
+            </ng-container>
+        </bkmrk-all-books>
     </mat-tab>
     <mat-tab label="Любимые книги">
         <bkmrk-favorite-books></bkmrk-favorite-books>
