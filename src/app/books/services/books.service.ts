@@ -18,6 +18,7 @@ export class BooksService {
   private booksListSnapshot: BooksList;
 
   private booksList$: Observable<BooksList>;
+  // вынести в Data в случае работы с http
   private favoriteBooksIds$: BehaviorSubject<string[]> = new BehaviorSubject([]);
   private uploadBook$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
