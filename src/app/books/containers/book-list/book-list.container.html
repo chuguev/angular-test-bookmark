@@ -1,22 +1,21 @@
 <div class="books">
   <mat-tab-group>
     <mat-tab label="Список книг">
-      <bkmrk-all-books
+      <bkmrk-books-list-with-search
         [Books]="Books$ | async"
         [IsAllBooksUpload]="IsAllBooksUpload$ | async"
-        (Search)="search($event)"
+        [IsLoading]="IsLoadingBooks$ | async"
         (UploadMore)="uploadMoreBooks()"
         (SwitchFavorite)="updateFavoriteBook($event)"
       >
         <ng-container *ngTemplateOutlet="status"></ng-container>
-      </bkmrk-all-books>
+      </bkmrk-books-list-with-search>
     </mat-tab>
     <mat-tab label="Любимые книги">
-      <bkmrk-all-books
+      <bkmrk-books-list-with-search
         [Books]="FavoriteBooks$ | async"
-        (Search)="search($event)"
         (SwitchFavorite)="updateFavoriteBook($event)"
-      ></bkmrk-all-books>
+      ></bkmrk-books-list-with-search>
     </mat-tab>
   </mat-tab-group>
 </div>

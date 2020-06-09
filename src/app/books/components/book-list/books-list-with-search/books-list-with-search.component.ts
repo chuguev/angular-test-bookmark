@@ -7,18 +7,17 @@ import { SelectionBook } from '../../../shared/selection-book-list/types/selecti
  * Список всех книг
  */
 @Component({
-  selector: 'bkmrk-all-books',
-  templateUrl: './all-books.component.html',
-  styleUrls: ['./all-books.component.scss'],
+  selector: 'bkmrk-books-list-with-search',
+  templateUrl: './books-list-with-search.component.html',
+  styleUrls: ['./books-list-with-search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AllBooksComponent {
+export class BooksListWithSearch {
   private books: Book[] = [];
   private selectionBooks: SelectionBook[] = [];
+  private searchTerm = '';
   private isAllBooksUploads = true;
-
-  @Output()
-  public Search: EventEmitter<string> = new EventEmitter<string>();
+  private isLoading = true;
 
   @Output()
   public SwitchFavorite: EventEmitter<Book> = new EventEmitter<Book>();
@@ -31,14 +30,19 @@ export class AllBooksComponent {
     this.isAllBooksUploads = v;
   }
 
-  get IsAllBooksUpload(): boolean {
-    return this.isAllBooksUploads;
+  @Input()
+  set IsLoading(v: boolean) {
+    this.isLoading = v;
+  }
+
+  get IsShowUploadMoreButton(): boolean {
+    return !this.isAllBooksUploads && !this.isLoading;
   }
 
   @Input()
   set Books(v: Book[]) {
     this.books = v;
-    this.selectionBooks = this.mapBookToSelectionBooks(v);
+    this.selectionBooks = this.getSelectionBooksBySearchTerm();
   }
 
   get SelectionBooks(): SelectionBook[] {
@@ -50,7 +54,8 @@ export class AllBooksComponent {
    * @param searchTerm - поисковой запрос
    */
   public search(searchTerm: string) {
-    this.Search.emit(searchTerm);
+    this.searchTerm = searchTerm;
+    this.selectionBooks = this.getSelectionBooksBySearchTerm();
   }
 
   /**
@@ -63,6 +68,13 @@ export class AllBooksComponent {
       favorite: selectionBook.selected,
     };
     this.SwitchFavorite.emit(currentBook);
+  }
+
+  /**
+   * Получить список выбираемых книг в зависимости от поискового запроса
+   */
+  private getSelectionBooksBySearchTerm(): SelectionBook[] {
+    return this.mapBookToSelectionBooks(this.books).filter(book => book.title.toLowerCase().includes(this.searchTerm.toLowerCase()));
   }
 
   /**

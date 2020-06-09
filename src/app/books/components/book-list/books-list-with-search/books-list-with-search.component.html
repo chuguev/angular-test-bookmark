@@ -3,7 +3,7 @@
 <div class="status">
     <ng-content></ng-content>
 </div>
-<div class="upload-more" *ngIf="!IsAllBooksUpload">
+<div class="upload-more" *ngIf="IsShowUploadMoreButton">
     <button (click)="UploadMore.emit()" mat-raised-button color="primary">Загрузить еще ...</button>
 </div>
 

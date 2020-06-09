@@ -5,13 +5,13 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { BookListContainerComponent } from './containers/book-list/book-list-container.component';
-import { AllBooksComponent } from './components/book-list/all-books/all-books.component';
+import { BookListContainer } from './containers/book-list/book-list.container';
+import { BooksListWithSearch } from './components/book-list/books-list-with-search/books-list-with-search.component';
 import { BooksSharedModule } from './shared/books-shared.module';
 
 @NgModule({
-  declarations: [BookListContainerComponent, AllBooksComponent],
+  declarations: [BookListContainer, BooksListWithSearch],
   imports: [CommonModule, BooksSharedModule, MatTabsModule, MatButtonModule, MatProgressSpinnerModule],
-  exports: [BookListContainerComponent],
+  exports: [BookListContainer],
 })
 export class BooksModule {}

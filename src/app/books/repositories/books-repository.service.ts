@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, OperatorFunction } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -10,7 +10,9 @@ import { BooksList } from '../services/books.type';
   providedIn: 'root',
 })
 export class BooksRepositoryService {
-  constructor(private http: HttpClient) {}
+  private readonly favoriteBooksIdsKey = 'favoriteBooksIds';
+
+  constructor(private http: HttpClient, @Inject(BOOKS_LOCAL_REPOSITORY) private booksLocalRepository: Storage) {}
 
   /**
    * Получить список книг. Можно указать необходимый диапазон загружаемых книг.
@@ -24,6 +26,23 @@ export class BooksRepositoryService {
     return this.http
       .get<BooksListResponse>(`https://content.googleapis.com/books/v1/volumes?maxResults=${maxResult}&q=potter&startIndex=${startIndex}`)
       .pipe(this.mapResponseToBooksList(startIndex, count));
+  }
+
+  /**
+   * Задать любимые книги
+   * @param ids - идентификаторы любимых книг
+   */
+  public setFavoriteBooks(ids: string[]): void {
+    this.booksLocalRepository.setItem(this.favoriteBooksIdsKey, JSON.stringify(ids));
+  }
+
+  /**
+   * Получить список идентификатор любимых книг из локального хранилища
+   */
+  public getFavoriteBooksIdsFromStorage(): string[] {
+    const storageIds: string | null = this.booksLocalRepository.getItem(this.favoriteBooksIdsKey);
+
+    return storageIds ? JSON.parse(storageIds) : [];
   }
 
   /**
@@ -44,3 +63,11 @@ export class BooksRepositoryService {
     }));
   }
 }
+
+/**
+ * Локальный репозиторий книг
+ */
+export const BOOKS_LOCAL_REPOSITORY: InjectionToken<Storage> = new InjectionToken<Storage>('Books Local Repository', {
+  providedIn: 'root',
+  factory: () => localStorage,
+});

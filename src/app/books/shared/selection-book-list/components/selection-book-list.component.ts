@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TrackByFunction } from '@angular/core';
 
 import { SelectionBook } from '../types/selection-book-list.type';
 
@@ -29,6 +29,8 @@ export class SelectionBookListComponent {
   get IsEmptyList(): boolean {
     return this.isEmptyList();
   }
+
+  public trackByBooks: TrackByFunction<SelectionBook> = (i: number, book: SelectionBook) => book.id;
 
   /**
    * Выбрать книгу

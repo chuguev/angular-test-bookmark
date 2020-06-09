@@ -12,7 +12,7 @@ import { Book } from '../../services/books.type';
   templateUrl: './book-list.container.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BookListContainerComponent implements OnInit {
+export class BookListContainer implements OnInit {
   private books$: Observable<Book[]>;
   private favoriteBooks$: Observable<Book[]>;
   private isLoadingBooks$: Observable<boolean>;
@@ -53,14 +53,6 @@ export class BookListContainerComponent implements OnInit {
    */
   public uploadMoreBooks(): void {
     this.booksService.uploadMoreBooks();
-  }
-
-  /**
-   * Поиск по списку книг
-   * @param searchTerm - поисковой запрос
-   */
-  public search(searchTerm: string): void {
-    console.log(searchTerm);
   }
 
   /**

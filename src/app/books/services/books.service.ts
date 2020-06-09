@@ -25,6 +25,7 @@ export class BooksService {
 
   constructor(private repository: BooksRepositoryService) {
     this.booksList$ = this.getBooksListHandler();
+    this.favoriteBooksIds$.next(this.repository.getFavoriteBooksIdsFromStorage());
   }
 
   /**
@@ -54,6 +55,7 @@ export class BooksService {
       ids = ids.filter(id => id !== book.id);
     }
 
+    this.repository.setFavoriteBooks(ids);
     this.favoriteBooksIds$.next(ids);
   }
 
@@ -92,6 +94,9 @@ export class BooksService {
     return combineLatest(this.favoriteBooksIds$, this.getBooksList()).pipe(this.updateFavoriteBooks(), shareReplay());
   }
 
+  /**
+   * Обновить список любимых книг. Pipeline
+   */
   private updateFavoriteBooks(): OperatorFunction<[string[], BooksList], BooksList> {
     return map(([ids, booksList]) => ({
       ...booksList,

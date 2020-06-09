@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BookListContainerComponent } from './book-list-container.component';
+import { BookListContainer } from './book-list.container';
 import { Component } from '@angular/core';
 
-describe('BookListComponent', () => {
-  let component: BookListContainerComponent;
-  let fixture: ComponentFixture<BookListContainerComponent>;
+describe('BookListContainer', () => {
+  let component: BookListContainer;
+  let fixture: ComponentFixture<BookListContainer>;
 
   beforeEach(async(() => {
     const mockComponents: any[] = [MatTabGroupMock, MatTabMock, AllBooksMock, FavoriteBooksMock];
 
     TestBed.configureTestingModule({
-      declarations: [BookListContainerComponent, ...mockComponents],
+      declarations: [BookListContainer, ...mockComponents],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BookListContainerComponent);
+    fixture = TestBed.createComponent(BookListContainer);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -40,7 +40,7 @@ class MatTabGroupMock {}
 class MatTabMock {}
 
 @Component({
-  selector: 'bkmrk-all-books',
+  selector: 'bkmrk-books-list-with-search',
   template: '',
 })
 class AllBooksMock {}
