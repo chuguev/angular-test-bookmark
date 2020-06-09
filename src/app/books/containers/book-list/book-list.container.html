@@ -12,7 +12,11 @@
       </bkmrk-all-books>
     </mat-tab>
     <mat-tab label="Любимые книги">
-      <bkmrk-favorite-books></bkmrk-favorite-books>
+      <bkmrk-all-books
+        [Books]="FavoriteBooks$ | async"
+        (Search)="search($event)"
+        (SwitchFavorite)="updateFavoriteBook($event)"
+      ></bkmrk-all-books>
     </mat-tab>
   </mat-tab-group>
 </div>

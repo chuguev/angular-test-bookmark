@@ -8,6 +8,7 @@ import { SelectionBook } from '../types/selection-book-list.type';
 @Component({
   selector: 'bkmrk-selection-book-list',
   templateUrl: './selection-book-list.component.html',
+  styleUrls: ['./selection-book-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectionBookListComponent {

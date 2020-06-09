@@ -9,7 +9,7 @@ import { Book, BooksList } from './books.type';
   providedIn: 'root',
 })
 export class BooksService {
-  private uploadStep = 40;
+  private uploadStep = 10;
   private initialBooksList: BooksList = {
     total: 0,
     count: 0,
@@ -46,12 +46,12 @@ export class BooksService {
    * @param book - книга
    */
   public setFavoriteBook(book: Book): void {
-    const ids = this.favoriteBooksIds$.getValue();
+    let ids = this.favoriteBooksIds$.getValue();
 
     if (book.favorite) {
       ids.push(book.id);
     } else {
-      ids.filter(id => id !== book.id);
+      ids = ids.filter(id => id !== book.id);
     }
 
     this.favoriteBooksIds$.next(ids);
@@ -190,6 +190,7 @@ export class BooksService {
    */
   private getCount(): number {
     const difference = this.booksListSnapshot.total - this.booksListSnapshot.count;
+
     return difference >= this.uploadStep ? this.uploadStep : difference - this.uploadStep;
   }
 }

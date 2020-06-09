@@ -14,14 +14,19 @@ import { Book } from '../../services/books.type';
 })
 export class BookListContainerComponent implements OnInit {
   private books$: Observable<Book[]>;
+  private favoriteBooks$: Observable<Book[]>;
   private isLoadingBooks$: Observable<boolean>;
   private isErrorBooks$: Observable<boolean>;
   private isAllBooksUpload$: Observable<boolean>;
 
   constructor(private booksService: BooksService) {}
 
-  get Books$(): Observable<any[]> {
+  get Books$(): Observable<Book[]> {
     return this.books$;
+  }
+
+  get FavoriteBooks$(): Observable<Book[]> {
+    return this.favoriteBooks$;
   }
 
   get IsAllBooksUpload$(): Observable<boolean> {
@@ -71,6 +76,7 @@ export class BookListContainerComponent implements OnInit {
    */
   private initialPageParameters(): void {
     this.books$ = this.booksService.getBooks();
+    this.favoriteBooks$ = this.booksService.getFavoriteBooks();
     this.isLoadingBooks$ = this.booksService.isLoading();
     this.isErrorBooks$ = this.booksService.isError();
     this.isAllBooksUpload$ = this.booksService.isAllBooks$();

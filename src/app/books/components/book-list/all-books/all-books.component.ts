@@ -15,7 +15,7 @@ import { SelectionBook } from '../../../shared/selection-book-list/types/selecti
 export class AllBooksComponent {
   private books: Book[] = [];
   private selectionBooks: SelectionBook[] = [];
-  private isAllBooksUploads: boolean;
+  private isAllBooksUploads = true;
 
   @Output()
   public Search: EventEmitter<string> = new EventEmitter<string>();
