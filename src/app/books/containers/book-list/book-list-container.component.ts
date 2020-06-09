@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { BooksService } from '../../services/books.service';
-import { Observable } from 'rxjs';
 import { Book } from '../../services/books.type';
 
 /**
@@ -16,7 +16,7 @@ export class BookListContainerComponent implements OnInit {
   private books$: Observable<Book[]>;
   private isLoadingBooks$: Observable<boolean>;
   private isErrorBooks$: Observable<boolean>;
-  private isAllBooksUpload: boolean;
+  private isAllBooksUpload$: Observable<boolean>;
 
   constructor(private booksService: BooksService) {}
 
@@ -24,8 +24,8 @@ export class BookListContainerComponent implements OnInit {
     return this.books$;
   }
 
-  get IsAllBooksUpload(): boolean {
-    return this.isAllBooksUpload;
+  get IsAllBooksUpload$(): Observable<boolean> {
+    return this.isAllBooksUpload$;
   }
 
   get IsLoadingBooks$(): Observable<boolean> {
@@ -63,7 +63,7 @@ export class BookListContainerComponent implements OnInit {
    * @param book - книга для обновления
    */
   public updateFavoriteBook(book: Book): void {
-    console.log(book);
+    this.booksService.setFavoriteBook(book);
   }
 
   /**
@@ -73,6 +73,6 @@ export class BookListContainerComponent implements OnInit {
     this.books$ = this.booksService.getBooks();
     this.isLoadingBooks$ = this.booksService.isLoading();
     this.isErrorBooks$ = this.booksService.isError();
-    this.isAllBooksUpload = this.booksService.isAllBooks();
+    this.isAllBooksUpload$ = this.booksService.isAllBooks$();
   }
 }

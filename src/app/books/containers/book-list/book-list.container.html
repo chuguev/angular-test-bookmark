@@ -1,18 +1,24 @@
 <div class="books">
   <mat-tab-group>
     <mat-tab label="Список книг">
-        <bkmrk-all-books [Books]="Books$ | async" [IsAllBooksUpload]="IsAllBooksUpload" (Search)="search($event)"
-                         (UploadMore)="uploadMoreBooks()" (SwitchFavorite)="updateFavoriteBook($event)">
-            <ng-container *ngIf="IsLoadingBooks$ | async">
-                <mat-spinner></mat-spinner>
-            </ng-container>
-            <ng-container *ngIf="IsErrorBooks$ | async">
-                <div class="mat-display-1">Ошибка загрузки списка</div>
-            </ng-container>
-        </bkmrk-all-books>
+      <bkmrk-all-books
+        [Books]="Books$ | async"
+        [IsAllBooksUpload]="IsAllBooksUpload$ | async"
+        (Search)="search($event)"
+        (UploadMore)="uploadMoreBooks()"
+        (SwitchFavorite)="updateFavoriteBook($event)"
+      >
+        <ng-container *ngTemplateOutlet="status"></ng-container>
+      </bkmrk-all-books>
     </mat-tab>
     <mat-tab label="Любимые книги">
-        <bkmrk-favorite-books></bkmrk-favorite-books>
+      <bkmrk-favorite-books></bkmrk-favorite-books>
     </mat-tab>
   </mat-tab-group>
 </div>
+
+<!--Статус загрузки книг-->
+<ng-template #status>
+  <mat-spinner *ngIf="IsLoadingBooks$ | async"></mat-spinner>
+  <div class="mat-display-1" *ngIf="IsErrorBooks$ | async">Ошибка загрузки списка</div>
+</ng-template>

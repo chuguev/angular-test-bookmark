@@ -33,6 +33,7 @@ export class SelectionBookListComponent {
    * Выбрать книгу
    */
   public selectBook(book: SelectionBook): void {
+    book.selected = !book.selected;
     this.Select.emit(book);
   }
 
