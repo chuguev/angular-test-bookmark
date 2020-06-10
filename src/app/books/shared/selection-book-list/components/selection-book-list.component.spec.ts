@@ -93,14 +93,12 @@ describe('SelectionBookListComponent', () => {
       expect(outputEvent).toHaveBeenCalled();
     });
 
-    it('Если список книг НЕ пустой #IsEmptyList должен вернуть FALSE', () => {
-      expect(component.IsEmptyList).toBeFalsy();
-    });
-    it('Если список книг ПУСТОЙ #IsEmptyList должен вернуть TRUE', () => {
-      component.Books = [];
-      fixture.detectChanges();
+    it('Метод #selectBook должен изменять состояние выбранной книги', () => {
+      const expectedBook: SelectionBook = Object.assign({}, selectedBookMock);
 
-      expect(component.IsEmptyList).toBeTruthy();
+      component.selectBook(expectedBook);
+
+      expect(expectedBook.selected).toBeFalsy();
     });
 
     it('Должны быть выведены заголовки', () => {
@@ -146,7 +144,7 @@ const selectedBookMock: SelectionBook = {
   id: 'Id #1',
   title: 'Title #1',
   description: 'Desc #1',
-  thumbnail: 'src #1',
+  thumbnail: 'https://angular.io/assets/images/logos/angular/angular.svg',
   selected: true,
 };
 
@@ -154,7 +152,7 @@ const unselectedBookMock: SelectionBook = {
   id: 'Id #2',
   title: 'Title #2',
   description: 'Desc #2',
-  thumbnail: 'src #2',
+  thumbnail: 'https://angular.io/assets/images/logos/angular/angular.svg',
   selected: false,
 };
 
