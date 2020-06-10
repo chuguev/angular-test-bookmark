@@ -92,6 +92,53 @@ describe('SelectionBookListComponent', () => {
 
       expect(outputEvent).toHaveBeenCalled();
     });
+
+    it('Если список книг НЕ пустой #IsEmptyList должен вернуть FALSE', () => {
+      expect(component.IsEmptyList).toBeFalsy();
+    });
+    it('Если список книг ПУСТОЙ #IsEmptyList должен вернуть TRUE', () => {
+      component.Books = [];
+      fixture.detectChanges();
+
+      expect(component.IsEmptyList).toBeTruthy();
+    });
+
+    it('Должны быть выведены заголовки', () => {
+      const expectedTitles: DebugElement[] = fixture.debugElement.queryAll(By.css(`.${bookCss}__title`));
+
+      expect(expectedTitles.length).toBe(itemsMock.length);
+    });
+
+    it('Должны быть выведены описания при их наличии', () => {
+      const expectedDescriptions: DebugElement[] = fixture.debugElement.queryAll(By.css(`.${bookCss}__description`));
+      const booksWithDescriptions: SelectionBook[] = itemsMock.filter(book => book.description);
+
+      expect(expectedDescriptions.length).toBe(booksWithDescriptions.length);
+    });
+
+    it('Должны быть выведены изображения книги при их наличии', () => {
+      const expectedThumbnail: DebugElement[] = fixture.debugElement.queryAll(By.css(`.${bookCss}__thumbnail`));
+      const booksWithThumbnail: SelectionBook[] = itemsMock.filter(book => book.thumbnail);
+
+      expect(expectedThumbnail.length).toBe(booksWithThumbnail.length);
+    });
+
+    it('Если книги ЯВЛЯЕТСЯ выбранной то иконка звездочки должна иметь цвет #primary', () => {
+      component.Books = [selectedBookMock];
+      fixture.detectChanges();
+
+      const expectedIcon: DebugElement = fixture.debugElement.query(By.css(`.${bookCss}__star`));
+
+      expect((expectedIcon.componentInstance as MatIconMock).color).toBe('primary');
+    });
+
+    it('Если книги НЕ является выбранной то иконка звездочки должна иметь цвет #accent', () => {
+      component.Books = [unselectedBookMock];
+      fixture.detectChanges();
+
+      const expectedIcon: DebugElement = fixture.debugElement.query(By.css(`.${bookCss}__star`));
+      expect((expectedIcon.componentInstance as MatIconMock).color).toBe('accent');
+    });
   });
 });
 
@@ -126,20 +173,22 @@ const bookWithoutThumbnailMock: SelectionBook = {
 
 const itemsMock: SelectionBook[] = [selectedBookMock, unselectedBookMock, bookWithoutDescriptionMock, bookWithoutThumbnailMock];
 
-// tslint:disable
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'mat-list',
   template: '<ng-content></ng-content>',
 })
 class MatListMock {}
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'mat-list-item',
   template: '<ng-content></ng-content>',
 })
 class MatListItemMock {}
 
 @Component({
+  // tslint:disable-next-line:component-selector
   selector: 'mat-icon',
   template: '<ng-content></ng-content>',
 })

@@ -2,14 +2,14 @@
   <ng-container *ngIf="!IsEmptyList; else errorMessage">
     <mat-list role="list">
       <mat-list-item role="listitem" *ngFor="let book of Books; trackBy: trackByBooks" class="book">
-        <img *ngIf="book?.thumbnail" matListAvatar [src]="book?.thumbnail" alt="book thumbnail" />
+        <img class="book__thumbnail" *ngIf="book?.thumbnail" matListAvatar [src]="book?.thumbnail" alt="book thumbnail" />
         <div matLine class="book__title">{{ book.title }}</div>
         <div matLine class="book__description" *ngIf="book?.description">
           {{ book.description }}
         </div>
         <div class="book__control">
           <button mat-icon-button>
-            <mat-icon (click)="selectBook(book)" [color]="book.selected ? 'primary' : 'accent'">star</mat-icon>
+            <mat-icon class="book__star" (click)="selectBook(book)" [color]="book.selected ? 'primary' : 'accent'">star</mat-icon>
           </button>
         </div>
       </mat-list-item>

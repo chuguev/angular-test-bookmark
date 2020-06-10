@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { BooksListWithSearch } from './books-list-with-search.component';
 
@@ -12,7 +12,13 @@ describe('AllBooksComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [BooksListWithSearch, ...mockComponents],
-    }).compileComponents();
+    })
+      .overrideComponent(BooksListWithSearch, {
+        set: {
+          changeDetection: ChangeDetectionStrategy.Default,
+        },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,10 +1,11 @@
-import { Inject, Injectable, InjectionToken } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, OperatorFunction } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { BooksListResponse } from './books-repository.type';
 import { BooksList } from '../services/books.type';
+import { BOOKS_LOCAL_REPOSITORY } from './books-storage-token';
 
 @Injectable({
   providedIn: 'root',
@@ -63,11 +64,3 @@ export class BooksRepositoryService {
     }));
   }
 }
-
-/**
- * Локальный репозиторий книг
- */
-export const BOOKS_LOCAL_REPOSITORY: InjectionToken<Storage> = new InjectionToken<Storage>('Books Local Repository', {
-  providedIn: 'root',
-  factory: () => localStorage,
-});

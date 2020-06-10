@@ -71,6 +71,6 @@ export class BookListContainer implements OnInit {
     this.favoriteBooks$ = this.booksService.getFavoriteBooks();
     this.isLoadingBooks$ = this.booksService.isLoading();
     this.isErrorBooks$ = this.booksService.isError();
-    this.isAllBooksUpload$ = this.booksService.isAllBooks$();
+    this.isAllBooksUpload$ = this.booksService.isAllBooks();
   }
 }

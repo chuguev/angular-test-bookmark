@@ -70,7 +70,7 @@ export class BooksService {
   /**
    * Загружены все книги
    */
-  public isAllBooks$(): Observable<boolean> {
+  public isAllBooks(): Observable<boolean> {
     return this.booksList$.pipe(map(list => list.total === list.count));
   }
 
